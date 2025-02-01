@@ -1,0 +1,4 @@
+#路徑資訊檔位置
+D:\python_code\Open_dwg_2.0\file_list.txt
+#CAD軟體路徑
+D:\python\

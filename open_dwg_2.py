@@ -1,11 +1,16 @@
 from tkinter import *
+from tkinter import messagebox
 from subprocess import Popen 
 import re,os
 
 #載入config資訊
-with open(f'{os.getcwd()}\\Open_dwg_2.0\\open_dwg_config.txt','r',encoding='utf-8') as fin:
-    file_list_path = fin.readlines()[1].strip()
-
+try:
+    with open(f'{os.getcwd()}\\open_dwg_config.txt','r',encoding='utf-8') as fin:
+        file_list_path = fin.readlines()[1].strip()
+except:
+    messagebox.showerror('錯誤','找不到config檔案')
+    messagebox.showinfo('訊息',f'請將config檔放在{os.getcwd()}')
+    exit()
 #產生品號路徑字典
 
 file_list_path = f"{os.getcwd()}\\file_list.txt"
@@ -38,7 +43,8 @@ def search_start():
     lab_2.config(text='搜尋到{:5}筆'.format(len(out_path)))
     lb_file.delete(0,END)
     for s in out_path:
-        lb_file.insert(END,s)      
+        lb_file.insert(END,s)
+
     
 #雙擊 -搜尋列表清單- 動作
 def open_dwg(event):

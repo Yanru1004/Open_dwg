@@ -8,18 +8,20 @@ try:
     with open(f'{os.getcwd()}\\open_dwg_config.txt','r',encoding='utf-8') as fin:
         config_data = fin.readlines()
         open_software  = config_data[1].strip() #開啟軟體路徑
-        file_list_path = config_data[3].strip()
-        
-        
+        file_list_path = config_data[3].strip() #品號列表路徑
+
 except FileNotFoundError:
     messagebox.showerror('錯誤','找不到config檔案')
     messagebox.showinfo('訊息',f'請將config檔放在{os.getcwd()}')
     exit()
 
+#確認品號列表存在，否則結束程式。
+if not os.path.exists(file_list_path):
+    messagebox.showerror('錯誤',f'路徑:{file_list_path}\n找不到品號列表檔案，請確認。')
+    exit()
+
 
 #產生品號路徑字典
-
-#file_list_path = f"{os.getcwd()}\\file_list.txt"
 
 with open(file_list_path,encoding='utf-8') as fin:
     file_list = fin.readlines()
@@ -57,6 +59,8 @@ def open_dwg(event):
     indexs = lb_file.curselection()
     Popen([open_software,result[lb_file.get(indexs)]],shell=True)
     print(result[lb_file.get(indexs)])
+
+
 
 root = Tk()
 

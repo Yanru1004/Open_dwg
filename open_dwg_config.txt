@@ -1,0 +1,4 @@
+#開圖軟體路徑
+C:\WINDOWS\system32\notepad.exe
+#路徑參考檔路徑
+D:\python_code\open_dwg\file_list_1.txt

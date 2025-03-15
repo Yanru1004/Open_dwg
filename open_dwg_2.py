@@ -4,20 +4,26 @@ from subprocess import Popen
 import re,os
 
 #載入config資訊
-try:
+try: 
     with open(f'{os.getcwd()}\\open_dwg_config.txt','r',encoding='utf-8') as fin:
-        file_list_path = fin.readlines()[1].strip()
-except:
+        config_data = fin.readlines()
+        open_software  = config_data[1].strip() #開啟軟體路徑
+        file_list_path = config_data[3].strip()
+        
+        
+except FileNotFoundError:
     messagebox.showerror('錯誤','找不到config檔案')
     messagebox.showinfo('訊息',f'請將config檔放在{os.getcwd()}')
     exit()
+
+
 #產生品號路徑字典
 
-file_list_path = f"{os.getcwd()}\\file_list.txt"
+#file_list_path = f"{os.getcwd()}\\file_list.txt"
 
 with open(file_list_path,encoding='utf-8') as fin:
     file_list = fin.readlines()
-      
+    print(file_list[0])
     folder = ''
     result = {}
 
@@ -49,12 +55,12 @@ def search_start():
 #雙擊 -搜尋列表清單- 動作
 def open_dwg(event):
     indexs = lb_file.curselection()
-    Popen(['start',lb_file.get(indexs)],shell=True)
+    Popen([open_software,result[lb_file.get(indexs)]],shell=True)
     print(result[lb_file.get(indexs)])
 
 root = Tk()
 
-root.title('OpenDwg 2.1')
+root.title('OpenDwg 2.0')
 
 font_style = '標楷體 16'
 lab_1 = Label(root,text ='輸入:',font=font_style)

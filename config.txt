@@ -1,4 +1,0 @@
-#開圖軟體路徑
-C:\Program Files\Common Files\eDrawings2021\eDrawings.exe
-#路徑參考檔路徑
-\\192.168.1.3\design\00_設計室\彥儒\file_list.txt

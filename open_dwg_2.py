@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from subprocess import Popen 
-import re,os
+import re,os,sys
 
 #載入config資訊
 try: 
@@ -13,13 +13,13 @@ try:
 except FileNotFoundError:
     messagebox.showerror('錯誤','找不到config檔案')
     messagebox.showinfo('訊息',f'請將config檔放在{os.getcwd()}')
-    exit()
-
+    sys.exit(0)
 #確認品號列表存在，否則結束程式。
 if not os.path.exists(file_list_path):
     messagebox.showerror('錯誤',f'路徑:{file_list_path}\n找不到品號列表檔案，請確認。')
-    exit()
-
+    
+    sys.exit(0)
+    
 
 #產生品號路徑字典
 
@@ -60,7 +60,10 @@ def open_dwg(event):
     Popen([open_software,result[lb_file.get(indexs)]],shell=True)
     print(result[lb_file.get(indexs)])
 
-
+#右鍵 -開啟檔案位置資料夾- 動作
+def open_folder(event):
+    indexs = lb_file.curselection()
+    Popen(['explorer',"\\".join(result[lb_file.get(indexs)].split('\\')[:-1])],shell=True)
 
 root = Tk()
 
@@ -75,6 +78,7 @@ lab_2 = Label(root,text ='請輸入搜尋料號',anchor='w',font=font_style,widt
 
 lb_file = Listbox(root,selectmode=SINGLE,font='標楷體 12',width=45)
 lb_file.bind("<Double-Button-1>",open_dwg)
+lb_file.bind("<Button-3>",open_folder)
 
 #表單輸出
 lab_1.grid(row=0,column=0,padx=5,pady=5) #輸入 文字方塊
@@ -83,3 +87,4 @@ btn_1.grid(row=0,column=5,padx=5,pady=5)  #按鈕 搜尋
 lab_2.grid(row=1,column=0,columnspan=6,padx=5,pady=5) #搜尋筆數
 lb_file.grid(row=2,column=0,columnspan=6,padx=5,pady=5) #輸出列表
 root.mainloop()
+

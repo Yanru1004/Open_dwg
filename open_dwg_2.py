@@ -14,6 +14,7 @@ except FileNotFoundError:
     messagebox.showerror('錯誤','找不到config檔案')
     messagebox.showinfo('訊息',f'請將config檔放在{os.getcwd()}')
     sys.exit(0)
+    
 #確認品號列表存在，否則結束程式。
 if not os.path.exists(file_list_path):
     messagebox.showerror('錯誤',f'路徑:{file_list_path}\n找不到品號列表檔案，請確認。')
@@ -60,10 +61,18 @@ def open_dwg(event):
     Popen([open_software,result[lb_file.get(indexs)]],shell=True)
     print(result[lb_file.get(indexs)])
 
+
 #右鍵 -開啟檔案位置資料夾- 動作
 def open_folder(event):
     indexs = lb_file.curselection()
     Popen(['explorer',"\\".join(result[lb_file.get(indexs)].split('\\')[:-1])],shell=True)
+
+
+#右鍵 -複製品號路徑- 動作
+def copy_path(event):
+    indexs = lb_file.curselection()
+    root.clipboard_clear()
+    root.clipboard_append(result[lb_file.get(indexs)])
 
 root = Tk()
 
